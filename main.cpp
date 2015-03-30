@@ -10,6 +10,9 @@
 #include <pbc.h>
 #include <cstring>
 #include <vector>
+#include "base64.h"
+#include <iostream>
+
 
 using namespace std;
 
@@ -133,17 +136,29 @@ private:
 };
 
 
-int main(int argc, char** argv) {
 
+
+int main(int argc, char** argv) {
+    
+  
+  
+    string m;
+    cout << "Enter message:" << std::endl;
+    getline(cin, m);
+  std::string encoded = base64_encode(reinterpret_cast<const unsigned char*>(m.c_str()), m.length());
+  std::string decoded = base64_decode(encoded);
+
+  std::cout << "encoded: " << encoded << std::endl;
+  std::cout << "decoded: " << decoded << std::endl;
+
+ 
+    
     pairing_t pairing;
     char param[1024];
     size_t count = fread(param, 1, 1024, stdin);
     if (!count) pbc_die("input error");
     pairing_init_set_buf(pairing, param, count);
     
-    
-    
-  
-    
     return 0;
 }
+
